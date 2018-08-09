@@ -1,0 +1,28 @@
+#Rcode
+library(RColorBrewer)
+mycol <- brewer.pal(4,'Accent')
+a1 <- read.table('analysis/fitness_3mut.txt',header=T)
+png('figures/fitness_3mut.png',res=600,height=3000,width=3000)
+par(mar=c(4,4,4,4))
+plot(log10(a1$nd_R1),log10(a1$nd_R2),col=mycol[a1$color],pch=16,xlab='replicate1',ylab='replicate2',xlim=c(-4,1),ylim=c(-4,1))
+legend('topleft',legend=c('single mutation','double mutation','triple mutation'),col=mycol,pch=16,bty='n',cex=1.6)
+abline(0,1,col='grey',lwd=2,lty=2)
+a1 <- a1[-which(a1$nd_R1==0),]
+a1 <- a1[-which(a1$nd_R2==0),]
+print(cor.test(log10(a1$nd_R1),log10(a1$nd_R2)))
+dev.off()
+
+png('figures/fitness_cor13_3mut_all.png',res=600,height=3000,width=3000)
+par(mar=c(4,4,4,4))
+plot(log10(a1$nd_R1),log10(a1$nd_R3),col=mycol[a1$color],pch=16,xlab='replicate1',ylab='replicate3',xlim=c(-4,1),ylim=c(-4,1))
+#legend('topleft',legend=c('single mutation','double mutation','triple mutation'),col=mycol,pch=16)
+legend('topleft',legend=paste('rho=',round(cor(log10(a1$nd_R1),log10(a1$nd_R3),method='spearman'),2),sep=''),bty='n',cex=1.5)
+abline(0,1,col='grey',lwd=2,lty=2)
+dev.off()
+png('figures/fitness_cor23_3mut_all.png',res=600,height=3000,width=3000)
+par(mar=c(4,4,4,4))
+plot(log10(a1$nd_R2),log10(a1$nd_R3),col=mycol[a1$color],pch=16,xlab='replicate2',ylab='replicate3',xlim=c(-4,1),ylim=c(-4,1))
+#legend('topleft',legend=c('single mutation','double mutation','triple mutation'),col=mycol,pch=16)
+legend('topleft',legend=paste('rho=',round(cor(log10(a1$nd_R2),log10(a1$nd_R3),method='spearman'),2),sep=''),bty='n',cex=1.5)
+abline(0,1,col='grey',lwd=2,lty=2)
+dev.off()

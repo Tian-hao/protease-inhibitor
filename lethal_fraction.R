@@ -1,0 +1,12 @@
+#Rcode
+library(RColorBrewer)
+mycol <- brewer.pal(4,'Accent')
+a1 <- read.table('analysis/lethal_fraction.txt',header=T)
+png('figures/lethal_fraction.png',res=600,height=2400,width=2400)
+par(mar=c(4,4,4,4))
+plot(a1$Num,a1$viable2,type='l',col=2,lwd=2,ylim=c(0,1),xlab='number of mutations',ylab='frequency of viable genotypes')
+points(a1$Num,a1$predviable2,type='l',col=1,lwd=2)
+points(a1$Num,a1$viable4,type='l',col=2,lwd=2,lty=2)
+points(a1$Num,a1$predviable4,type='l',col=1,lwd=2,lty=2)
+legend('topright',legend=c('observed(threshold=-2)','predicted, no epistasis','observed(threshold=-4)','predicted, no epistasis'),col=c(2,1,2,1),lty=c(1,1,2,2),lwd=2,bty='n',cex=0.8)
+dev.off()

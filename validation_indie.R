@@ -1,0 +1,20 @@
+#Rcode
+a1 <- read.table('analysis/validation_fitness_correlation.txt',header=T)
+b1 <- read.table('analysis/validation_infection_p24.txt',header=T)
+ab1 <- merge(a1, b1, by=c(1,1))
+png('figures/validation_indie.png',res=600,width=4000,height=1800)
+par(mfrow=c(1,3))
+plot(ab1$fitness.x,ab1$fitness.y,xlab='screening',ylab='p24',main=paste('infection,9dpi,\np24 in supernatant\nrho=',round(cor(ab1$fitness.x,ab1$fitness.y,method='spearman'),4),sep=''),pch=16)
+segments(ab1$fitness.x-ab1$fitness_std,ab1$fitness.y,ab1$fitness.x+ab1$fitness_std,ab1$fitness.y,lwd=2)
+segments(ab1$fitness.x,ab1$fitness.y-ab1$std,ab1$fitness.x,ab1$fitness.y+ab1$std,lwd=2)
+
+c1 <- read.table('analysis/validation_qPCR.txt')
+ac1 <- merge(a1, c1, by=c(1,1))
+plot(ac1$fitness,ac1$V2,xlab='screening',ylab='genome copy number',main=paste('infection,6dpi,\nviral RNA in supernatant\nrho=',round(cor(ac1$fitness,ac1$V2,method='spearman'),4),sep=''),pch=16)
+segments(ac1$fitness-ac1$fitness_std,ac1$V2,ac1$fitness+ac1$fitness_std,ac1$V2,lwd=2)
+
+d1 <- read.table('analysis/validation_transfection_p24.txt',header=T)
+ad1 <- merge(a1, d1, by=c(1,1))
+plot(ad1$fitness,ad1$DMSO,xlab='screening',ylab='p24',main=paste('transfection,\nviral p24 in supernatant\nrho=',round(cor(ad1$fitness,ad1$DMSO,method='spearman'),4),sep=''),pch=16)
+segments(ad1$fitness-ad1$fitness_std,ad1$DMSO,ad1$fitness+ad1$fitness_std,ad1$DMSO,lwd=2)
+dev.off()

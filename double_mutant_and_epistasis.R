@@ -1,0 +1,15 @@
+#Rcode
+a1 <- read.table('analysis/fitness_predict_double.txt',header=T)
+png('figures/fitness_predict_double.png',res=600,width=2400,height=2400)
+par(mar=c(4,4,4,4))
+plot(a1$predicted,a1$fitness,pch=16,xlab='predicted',ylab='observed',xlim=c(-5,1),ylim=c(-5,1))
+segments(a1$predicted-a1$predstd,a1$fitness,a1$predicted+a1$predstd,a1$fitness,lwd=2)
+segments(a1$predicted,a1$fitness+a1$std,a1$predicted,a1$fitness-a1$std,lwd=2)
+abline(0,1,lty=2,lwd=2,col='grey')
+dev.off()
+
+a1 <- read.table('analysis/epistasis_double.txt',header=T)
+png('figures/epistasis_double.png',res=600,width=2000,height=2000)
+par(mar=c(4,4,4,4),lwd=3)
+hist(a1[,2],main='distribution of epistasis',xlab='epistasis',col=4,lwd=3)
+dev.off()

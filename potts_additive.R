@@ -1,0 +1,11 @@
+#Rcode
+a1 <- read.table('analysis/potts_double_prediction.txt',header=T)
+png('figures/potts_double_prediction.png',res=600,width=2800,height=2800)
+plot(a1[,2],a1[,3],pch=16,xlab='without coupling',ylab='with coupling',xlim=c(9,20),ylim=c(9,20))
+abline(0,1,lty=2,lwd=2)
+dev.off()
+a1 <- read.table('analysis/potts_double_prediction_all.txt',header=T)
+png('figures/potts_double_prediction_all.png',res=600,width=2800,height=2800)
+plot(a1[,2],a1[,3],pch=16,xlab='without coupling',ylab='with coupling',xlim=c(4,20),ylim=c(4,20))
+abline(0,1,lty=2,lwd=2)
+dev.off()
